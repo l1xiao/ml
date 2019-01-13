@@ -62,8 +62,24 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%part1 calculate cost J
+% transform y to a matrix 10*5000
+a1=[ones(m, 1) X]
+z2=Theta1*a1'
+a2=sigmoid(z2)
+a2=[ones(1, m); a2];
+z3=Theta2*a2
+a3=sigmoid(z3)
+h=a3
+y_vect = zeros(num_labels, m)
+for i = 1:m
+    y_vect(y(i),i)=1
+end
 
-
+for i = 1:m
+    % J = J + sum(-y_vect(:,i)*log(a3)-(1-y_vect(:,i)*log(1-a3)))
+end
+J = J/m 
 
 
 
