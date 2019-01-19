@@ -80,13 +80,25 @@ for i = 1:m
     J = J + 1/m*sum(-log(h(:,i))'*y_vect(:,i)-log(1-h(:,i))'*(1-y_vect(:,i)));
 end
 
+%part2 add Regularized cost function
+Theta1_use=Theta1(:, 2:end);
+Theta2_use=Theta2(:, 2:end);
+J = J + lambda/(2*m)*(sum(sum(Theta1_use.^2))+sum(sum(Theta2_use.^2)));
 
-
-
-
-
-
-
+%part3 calculate the gradient
+Delta1=zeros(size(Theta1));
+Delta2=zeros(size(Theta2));
+% i = 1;
+for i = 1:m
+    delta3=a3(:,i) - y_vect(:,i);
+    delta2=(Theta2' * delta3)(2:end,:) .* sigmoidGradient(z2(:,i));
+    Delta2+=delta3 * a2(:,i)';
+    Delta1+=delta2 * a1(i,:);
+end
+Theta2_grad = Delta2 / m;
+Theta1_grad = Delta1 / m;
+Theta2_grad(:, 2 : end) = Theta2_grad(:, 2 : end) .+ lambda * Theta2(:, 2 : end) / m;
+Theta1_grad(:, 2 : end) = Theta1_grad(:, 2 : end) .+ lambda * Theta1(:, 2 : end) / m;
 
 
 
